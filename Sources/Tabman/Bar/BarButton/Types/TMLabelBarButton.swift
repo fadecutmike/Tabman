@@ -158,7 +158,7 @@ open class TMLabelBarButton: TMBarButton {
     // MARK: Layout
     
     private func getConstantBadgeOffsetValue() -> CGPoint {
-        .init(x: badgeContainer.frame.width*2.5 + badgeOffsetAdustment.x, y: badgeContainer.frame.height*1.75 + badgeOffsetAdustment.y)
+        .init(x: badgeContainer.frame.width*3.0 + 8.0 + badgeOffsetAdustment.x, y: badgeContainer.frame.height*2.5 - 2.0 + badgeOffsetAdustment.y)
     }
     
     private func updateBadgeOffsetConstraints() {
