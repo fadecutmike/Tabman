@@ -111,9 +111,12 @@ open class TMLabelBarButton: TMBarButton {
 
     open override func layout(in view: UIView) {
         super.layout(in: view)
+        imgView.image = item.image
         
         view.addSubview(label)
+        view.addSubview(imgView)
         view.addSubview(badgeContainer)
+        imgView.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
         badgeContainer.translatesAutoresizingMaskIntoConstraints = false
         
@@ -124,12 +127,24 @@ open class TMLabelBarButton: TMBarButton {
         let badgeContainerWidth = badgeContainer.widthAnchor.constraint(equalToConstant: 0.0)
         let labelCenterConstraint = label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         let labelCenterConstraintX = label.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        
+        
+        let imgConLeft = imgView.trailingAnchor.constraint(equalTo: label.leadingAnchor, constant: -6.0)
+        let imgCenterY = imgView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        let imgWidth = imgView.widthAnchor.constraint(equalToConstant: item.image == nil ? 0.0 : 24.0)
+        let imgHeight = imgView.heightAnchor.constraint(equalToConstant: item.image == nil ? 0.0 : 24.0)
+        
         let constraints = [
             badgeCenterX,
             badgeCenterY,
             labelCenterConstraint,
             labelCenterConstraintX,
-            badgeContainerWidth
+            badgeContainerWidth,
+            
+            imgConLeft,
+            imgCenterY,
+            imgWidth,
+            imgHeight
         ]
 
         self.badgeContainerWidth = badgeContainerWidth

@@ -58,7 +58,7 @@ open class TMBarButton: UIControl {
     
     /// Badge View
     public let badge = TMBadgeView()
-    
+    public let imgView = UIImageView()
     /// Whether the button should fade its alpha value when it is unselected.
     ///
     /// If enabled the button will interpolate between a minumum alpha of 0.5 and 1.0
