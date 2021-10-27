@@ -126,7 +126,7 @@ open class TMLabelBarButton: TMBarButton {
         
         let badgeContainerWidth = badgeContainer.widthAnchor.constraint(equalToConstant: 0.0)
         let labelCenterConstraint = label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        let labelCenterConstraintX = label.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        let labelCenterConstraintX = label.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: item.image == nil ? 0.0 : 15.0)
         
         
         let imgConLeft = imgView.trailingAnchor.constraint(equalTo: label.leadingAnchor, constant: -6.0)
