@@ -3,7 +3,7 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 06/10/2018.
-//  Copyright © 2019 UI At Six. All rights reserved.
+//  Copyright © 2020 UI At Six. All rights reserved.
 //
 
 import UIKit
@@ -143,16 +143,7 @@ public final class TMSystemBar: UIView {
             extendingView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ]
         
-        let safeAreaInsets: UIEdgeInsets
-        if #available(iOS 11, *) {
-            safeAreaInsets = viewController.view.safeAreaInsets
-        } else {
-            safeAreaInsets = UIEdgeInsets(top: viewController.topLayoutGuide.length,
-                                          left: 0.0,
-                                          bottom: viewController.bottomLayoutGuide.length,
-                                          right: 0.0)
-        }
-        
+        let safeAreaInsets = viewController.view.safeAreaInsets
         let isNavigationBarNotVisible = viewController.navigationController?.isNavigationBarHidden != false
         
         let relativeFrame = viewController.view.convert(self.frame, from: superview)
