@@ -52,6 +52,8 @@ open class TMConstrainedHorizontalBarLayout: TMHorizontalBarLayout {
         }
     }
     
+    open var buttonsBarMargin: CGFloat?
+    
     // MARK: Lifecycle
     
     open override func layout(in view: UIView) {
@@ -78,10 +80,40 @@ private extension TMConstrainedHorizontalBarLayout {
         let itemViews = views.filter { !($0 is SeparatorView) }
         let multiplier = 1.0 / CGFloat(min(maximumCount, itemViews.count))
         let separatorWidth = self.separatorWidth ?? 0
-        for view in itemViews {
+        
+        var firstMissingSpace: CGFloat = 0
+        var lastMissingSpace: CGFloat = 0
+        var perItemSpace: CGFloat = 0
+        let calculatedWidth = layoutGuide.layoutFrame.width * multiplier
+        if let buttonsBarMargin, itemViews.count > 2, !calculatedWidth.isNaN {
+            if let view = itemViews.first {
+                let require = (view.intrinsicContentSize.width) + (buttonsBarMargin * 2)
+                if require > calculatedWidth {
+                    firstMissingSpace = require - calculatedWidth
+                }
+            }
+            if let view = itemViews.last {
+                let require = (view.intrinsicContentSize.width) + (buttonsBarMargin * 2)
+                if require > calculatedWidth {
+                    lastMissingSpace = require - calculatedWidth
+                }
+            }
+            let totalMissingSpace = firstMissingSpace + lastMissingSpace
+            perItemSpace = totalMissingSpace / CGFloat(itemViews.count - 2)
+        }
+        
+        for (index, view) in itemViews.enumerated() {
+            var constant = -separatorWidth
+            if index == 0 {
+                constant += firstMissingSpace
+            } else if index == itemViews.count - 1 {
+                constant += lastMissingSpace
+            } else {
+                constant -= perItemSpace
+            }
             constraints.append(view.widthAnchor.constraint(equalTo: layoutGuide.widthAnchor,
                                                            multiplier: multiplier,
-                                                           constant: -separatorWidth))
+                                                           constant: constant))
         }
         NSLayoutConstraint.activate(constraints)
         self.viewWidthConstraints = constraints
